@@ -6,17 +6,17 @@
 # This wrapper attemps to hide the existence of ".gitkeep" files from the user,
 # while hiding their nonexistence from git.
 
-GIT="/usr/bin/git"
+GIT="/usr/local/bin/git"
 
 function reinsert_keepfiles {
-  find -name .git -prune -o -type d -empty -print |
+  find . -name .git -prune -o -type d -empty -print |
     sed 's/$/\/.gitkeep/g' |
     tr '\n' '\0' | xargs -0 "$GIT" ls-files |
     tr '\n' '\0' | xargs -0 touch 2> /dev/null
 }
 
 function hide_keepfiles {
-  find -name .git -prune -o -name '\.gitkeep' -print0 |
+  find . -name .git -prune -o -name '\.gitkeep' -print0 |
     xargs -0 rm -f
 }
 
@@ -39,7 +39,7 @@ case "$COMMAND" in
     reinsert_keepfiles
     "$GIT" "$COMMAND" "$@"
     STATUS="$?"
-    UNTRACKED_DIRS="$(find -name .git -prune -o -type d -empty -print |
+    UNTRACKED_DIRS="$(find . -name .git -prune -o -type d -empty -print |
       sed 's/^/#	/g')"
     if [ "$UNTRACKED_DIRS" ]; then
       echo "#"

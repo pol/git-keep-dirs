@@ -1,9 +1,7 @@
-PREFIX ?= /usr/local/git-keep-dirs
+PREFIX ?= /usr/local
 BINS = $(wildcard bin/*)
 
 install:
-	@echo "... creating $(PREFIX)/bin"
-	mkdir -p $(PREFIX)/bin
 	@echo "... installing to $(PREFIX)/bin"
 	@$(foreach BIN, $(BINS), \
 	echo "... installing `basename $(BIN)`"; \

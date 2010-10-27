@@ -1,0 +1,5 @@
+#!/bin/bash
+DIR="$(dirname "$(readlink "$0" || echo "$0")")"
+NAME="$(basename "$0")"
+
+"$DIR/git" "$NAME" "$@"

@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ ! -f "$1" ]; then
+  echo "usage:"
+  echo "  $0 foo.tar"
+  echo ""
+  echo "Removes \".gitkeep\" files from the archive."
+  exit
+fi
+
+tar tf "$1" | grep '\.gitkeep' |
+  tr '\n' '\0' | xargs -0 tar f "$1" --delete
